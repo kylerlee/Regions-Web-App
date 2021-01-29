@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CountryApp.Models.Region>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Region List</h2>
+
+@foreach (var region in Model)
+{
+    <div>
+        @Html.DisplayFor(modelItem => region.Name)
+    </div>
+    foreach (var subRegion in region.SubRegions)
+    {
+        <div style="padding-left: 4em">
+            @Html.DisplayFor(modelItem => subRegion.Name)
+        </div>
+        foreach (var country in subRegion.Countries)
+        {
+            <div style="padding-left: 8em">
+                @Html.DisplayFor(modelItem => country.Name)
+            </div>
+            <div style="padding-left: 12em">
+                @Html.DisplayFor(modelItem => country.Capital)
+                <br />
+                @{
+                    string joinCurrencies = string.Join(", ", country.Currencies.Select(x => x.Name).Where(y => !string.IsNullOrEmpty(y)));
+                    string joinLanguages = string.Join(", ", country.Languages.Select(x => x.Name).Where(y => !string.IsNullOrEmpty(y)));
+                }
+                @Html.DisplayFor(modelItem => joinCurrencies)
+                <br />
+                @Html.DisplayFor(modelItem => joinLanguages)
+                <br />
+            </div>
+        }
+    }
+}
